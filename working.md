@@ -155,6 +155,83 @@ after viewing we want the back button there to comeback to customers , so
 
 that's it .. 
 
+# 4
+
+today we are working on edit customer 
+
+first going to edit button 
+
+    <button wire:navigate href="/customers/{{$customer->id}}/edit" class="btn btn-secondary btn-sm">Edit</button>
+
+then we need to apply this in route
+
+Route::get('/customers/{customer}/edit', EditCustomer::class);  -> we should create this Component 
+
+then go to EditCustomer Component, this form form more similar like create-customer 
+
+so copy that code and paste it here.. change the form tag        
+    <form wire:submit="updateCustomer"> we later create this method (updateCustomer) in class file 
+
+
+then go
+
+    public $customer;
+    public $name;
+    public $email;
+    public $phone;
+
+    public function mount(Customer $customer){
+        $this->customer = $customer;
+        $this->name=$customer->name;
+        $this->email=$customer->email;
+        $this->phone=$customer->phone;
+    }
+
+this is same like passing the id in mount .. this method is happens like a magic 
+
+ the create la epdi save function yeluthunammo , athey mari edit la update ku function yelutha porom.. 
+
+    public function updateCustomer(){
+        $validated = $this->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|',
+        'phone' => 'required|',
+    ]);
+
+        $this->customer->update($validated);
+
+ save la epdi validate panni save pannamo athey mari update pannumbothum validate panni than update pannanum.. 
+
+then update aanathuku aprom flash message , customer page la vantha nallarukum ..so 
+
+      session()->flash('success', 'Customer Updated successfully.');
+        return $this->redirect('/customers', navigate:true);
+
+intha flash message enga varanum naa.. update pannathum customer page la table ku mela varanum.. so 
+
+athuku munnadi intha flash message ah oru component la store pannitaa , atha enga venumnaalum call panni use panikalam, so
+
+> php artisan make:livewire flash-message
+
+    <div>
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+        @endif
+    </div>
+
+then customer blade file ku poi , top la itha call panalam
+
+<livewire:flash-message/>
+
+just like this .. 
+
+thats it .. 
+
+
+
+
 
 
 

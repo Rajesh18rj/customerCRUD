@@ -5,6 +5,8 @@
     href="/customers/create"
 >Create</button>
 
+<livewire:flash-message/>
+
 <table class="table">
     <thead>
     <tr>
@@ -26,7 +28,7 @@
             <td>{{ $customer->phone }}</td>
             <td>
                 <button wire:navigate href="/customers/{{$customer->id}}" class="btn btn-primary btn-sm">View</button>
-                <button class="btn btn-secondary btn-sm">Edit</button>
+                <button wire:navigate href="/customers/{{$customer->id}}/edit" class="btn btn-secondary btn-sm">Edit</button>
                 <button class="btn btn-danger btn-sm">Delete</button>
             </td>
         </tr>
