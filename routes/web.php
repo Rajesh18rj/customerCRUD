@@ -8,3 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/customers/create', CreateCustomer::class);
+Route::get('/customers', \App\Livewire\Customers::class);
+
+
+
