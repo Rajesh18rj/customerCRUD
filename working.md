@@ -229,6 +229,29 @@ just like this ..
 
 thats it .. 
 
+# 5 
+
+delete customer 
+
+                <button wire:click="deleteCustomer({{ $customer->id }})" class="btn btn-danger btn-sm">Delete</button>
+add this in delete button
+
+then lets go to customer class file 
+
+    public function deleteCustomer(Customer $customer){
+        $customer->delete();
+       
+    }
+
+we already see this method , instead of passing id 
+
+then if we want can add flash message
+
+    session()->flash('success', 'Customer Deleted successfully.');
+    return $this->redirect('/customers', navigate:true);
+
+thats it .. 
+
 
 
 

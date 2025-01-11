@@ -12,6 +12,13 @@ class Customers extends Component
 //    public function mount(){
 //        $this->customers=Customer::all();
 //    }
+
+    public function deleteCustomer(Customer $customer){
+        $customer->delete();
+        session()->flash('success', 'Customer Deleted successfully.');
+        return $this->redirect('/customers', navigate:true);
+    }
+
     public function render()
     {
         return view('livewire.customers',[
