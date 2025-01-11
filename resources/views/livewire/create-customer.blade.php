@@ -35,6 +35,7 @@
                 </div>
             </div>
 
+            <button wire:navigate href="/customers" class="btn btn-secondary">Back</button>
 
             <button type="submit" class="btn btn-primary">Submit</button>
 

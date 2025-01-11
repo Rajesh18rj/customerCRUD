@@ -105,6 +105,56 @@ just like this .. now go to customers url , you can see the customer details
 
 thats it .. 
 
+# 3 
+
+show single customer
+
+first uh enna panna porom naa.. antha table ku mela oru button vachu , antha button ah click panna navigate aagi customer/create route ku pora mathiri pana porom..
+
+    <div>
+    <button
+        class="btn btn-success btn-sm"
+        wire:navigate
+        href="/customers/create"
+    >Create</button>
+    ..
+    </div>
+
+then antha customer create page la submit pakkathula back nu oru button vachu , back click panna again '/customers' route ke vara mari panna porom..
+
+       <button wire:navigate href="/customers" class="btn btn-secondary">Back</button>
+
+ok lets working on view button , 
+
+what we are going to do is when i click view button its shows a card that should contains customer details 
+
+go to view button
+
+     <button wire:navigate href="/customers/{{$customer->id}}" class="btn btn-primary btn-sm">View</button> 
+inga id pass panrom becoz oru particular customer ah than view panna porom, thats why 
+
+then create a livewire component for view -'ViewCustomer'
+
+then tell this in route ..
+    Route::get('/customers/{customer}', ViewCustomer::class);
+
+now go to ViewCustomer
+
+    public $customer;
+    public function mount(Customer $customer){
+        $this->customer = $customer;
+    }
+
+then go to view file , we need a card code to show the customer detail , so get that in bs docs
+
+paste it in blade file and change the columns using $customer key we passed in class file
+
+after viewing we want the back button there to comeback to customers , so 
+
+        <a wire:navigate href="/customers" class="btn btn-secondary">Back</a>
+
+that's it .. 
+
 
 
 
