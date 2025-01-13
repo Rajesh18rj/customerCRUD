@@ -252,6 +252,72 @@ then if we want can add flash message
 
 thats it .. 
 
+# 6 
+
+in this epi we are going to see registering a user
+
+create a Register Livewire component
+
+first go to Register class file 
+
+    public $name;
+    public $email;
+    public $password;
+
+assign these public properties first 
+
+the create storeUser function.. 
+
+    public function storeUser(){
+    $validated = $this->validate([
+    'name' => 'required',
+    'email' => 'required|email|unique:users',
+    'password' => 'required|min:8',
+    ]);
+
+        //after validate the User we are going to save that user
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => bcrypt($this->password),
+        ]);
+
+        // after save the user , we need to login that user
+        Auth::login($user);
+
+        session()->flash('success', 'Registration successful!');
+
+        //after login we need to redirect to the customers
+        return $this->redirect('/customers', navigate:true);
+    }
+
+we need to represent these fields in Register form so we need a form code , so go in bootstrap and take form code and paste it blade file
+assign the fields in form tag and name, email, password
+
+then we need a route for register .. 
+
+Route::get('register', Register::class);
+
+then end of the form use this .. 
+            <div class="mb-3">
+                Already have an account ? <button wire:navigate href="/login" class="btn btn-success btn-sm">Login </button>
+            </div>
+this login url not working , now we working on this later
+
+then we are going to group these in single auth route 
+
+    Route::middleware('auth')->group(function () {
+    Route::get('/customers/create', CreateCustomer::class);
+    Route::get('/customers', Customers::class);
+    Route::get('/customers/{customer}', ViewCustomer::class);
+    Route::get('/customers/{customer}/edit', EditCustomer::class);
+});
+
+becoz we want to show these routes , only the user is auth user 
+
+that's it .. 
+
+
 
 
 
