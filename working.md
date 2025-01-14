@@ -307,6 +307,7 @@ this login url not working , now we working on this later
 then we are going to group these in single auth route 
 
     Route::middleware('auth')->group(function () {
+                                                                                                                                                                                                                                                              
     Route::get('/customers/create', CreateCustomer::class);
     Route::get('/customers', Customers::class);
     Route::get('/customers/{customer}', ViewCustomer::class);
@@ -316,6 +317,65 @@ then we are going to group these in single auth route
 becoz we want to show these routes , only the user is auth user 
 
 that's it .. 
+
+# 7 
+
+we are working on login
+
+first we are going to create a navbar Component
+
+go to BS docs find the one navbar code 
+
+in that navbar we can have Login , register , customers and logout 
+
+login and register only shown to guest users .. give that with in the @guest directive
+
+then customers and logout should be within @auth directive , becoz auth users only access these pages
+we should define the wire:navigate and href.
+
+then goto class file and define that logout method
+    
+    public function logout(Request $request){
+           Auth::logout();
+           $request->session()->invalidate();
+           $request->session()->regenerateToken();
+           return $this->redirect('login', navigate: true);
+        }
+
+then we should create a login component 
+
+then copy and paste the register blade function into it .. and remove the name column 
+then change the form wire:submit method --> loginUser()
+
+we are going to create that loginUser Method in class file 
+
+first define the email and password property 
+
+then 
+
+    public function loginUser(Request $request){
+        $validated = $this->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        //if the password matches email we are allow the user to login
+        if(Auth::attempt($validated)){
+            $request->session()->regenerate();
+
+            return $this->redirect('/customers', navigate: true);
+        }
+        //if the password did not match to that email
+        $this->addError('email', 'The Password provided is incorrect.');
+    }
+
+then create a route for this 
+
+    Route::get('/login', Login::class)->name('login');
+that's it .. 
+
+
+
 
 
 
