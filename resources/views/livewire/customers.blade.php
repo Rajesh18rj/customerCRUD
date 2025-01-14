@@ -1,9 +1,16 @@
 <div>
-<button
-    class="btn btn-success btn-sm"
-    wire:navigate
-    href="/customers/create"
->Create</button>
+    <div class="row">
+        <div class="col-auto">
+            <button
+                class="btn btn-success btn-sm"
+                wire:navigate
+                href="/customers/create"
+            >Create</button>
+        </div>
+        <div class="col-auto">
+            <input wire:model.live.debounce.150ms="search" type="text" class="form-control" placeholder="search customers">
+        </div>
+    </div>
 
 <livewire:flash-message/>
 

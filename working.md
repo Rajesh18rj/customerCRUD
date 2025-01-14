@@ -374,6 +374,37 @@ then create a route for this
     Route::get('/login', Login::class)->name('login');
 that's it .. 
 
+# 8 
+today we are going to working on search 
+
+create the search input field in customers blade file under the create customer 
+
+    <div>
+    <div class="row">
+        <div class="col-auto">
+            <button
+                class="btn btn-success btn-sm"
+                wire:navigate
+                href="/customers/create"
+            >Create</button>
+        </div>
+        <div class="col-auto">
+            <input wire:model.live.debounce.150ms="search" type="text" class="form-control" placeholder="search customers">
+        </div>
+    </div>
+
+then go to class file 
+
+    if(! $this->search){
+        $this->customers = Customer::all();
+    }
+    else{
+        $this->customers= Customer::where('name', 'like', '%'.$this->search.'%')->get();
+    }
+
+write this in class file .. we are going to search by name thats why we write like this .. 
+
+
 
 
 
