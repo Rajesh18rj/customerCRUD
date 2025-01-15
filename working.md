@@ -408,8 +408,16 @@ write this in class file .. we are going to search by name thats why we write li
 
 pagination
 
+    use WithPagination
 
+    if(! $this->search){
+        $customers = Customer::paginate(2);
+    }
+    else{
+        $customers = Customer::where('name', 'like', '%'.$this->search.'%')->paginate(2);
+    }
 
+{{ $customers->links() }}
 
 
 
